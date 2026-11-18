@@ -64,5 +64,5 @@ Taks 10:
 1. `git stash push -um "WIP payments"`, `git switch main`, `git checkout -b hotfix`, `git switch main`, `git merge hotfix`, `git tag v1.0.1 -m "Fixed critical bug"`
 2. `git switch feature/payments`, `git stash pop`, `git rebase main`
 3. `git add [conflicting file]`, `git rebase --continue`
-4. `git rebase -i`, set everything to squash except one, `git switch main`, `git merge feature/payments`, `git push --tags`
+4. `git rebase -i HEAD~[however many commits you made]`, set everything to squash except one, `git switch main`, `git merge feature/payments`, `git push --tags`
 5. `git revert -m 1 [merge commit's ref]`
