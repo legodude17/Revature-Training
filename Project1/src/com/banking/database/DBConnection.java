@@ -16,6 +16,14 @@ public class DBConnection {
     private final List<Customer> customers = new ArrayList<>();
     private final List<Transaction> transactions = new ArrayList<>();
 
+    public DBConnection() {
+
+    }
+
+    public void close() {
+        
+    }
+
     // ---------- Account ----------
 
     public void insertAccount(Account account) {

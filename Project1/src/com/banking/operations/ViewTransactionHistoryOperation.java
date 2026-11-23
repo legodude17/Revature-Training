@@ -1,15 +1,21 @@
 package com.banking.operations;
 
-import java.util.Scanner;
+import com.banking.database.DBConnection;
+import com.banking.model.Account;
+import com.banking.model.Transaction;
 
-public class ViewTransactionHistoryOperation extends BankOperation {
+public class ViewTransactionHistoryOperation extends BankOperationWithAccount {
     @Override
-    public void getInput(Scanner scanner) {
-        // TODO: prompt for and store the input needed for this operation
-    }
-
-    @Override
-    public void execute() {
-        // TODO: implement viewing transaction history
+    protected void execute_inner(DBConnection conn, Account account) {
+        var transactions = conn.queryTransactionsByAccount(accountNumber);
+        for (Transaction transaction : transactions) {
+            System.out.println("Date: " + transaction.date);
+            System.out.println("Type: " + transaction.type);
+            System.out.println("Amount: " + transaction.amount);
+            if (transaction.reference != null) {
+                System.out.println("Ref: " + transaction.reference);
+            }
+            System.out.println();
+        }
     }
 }

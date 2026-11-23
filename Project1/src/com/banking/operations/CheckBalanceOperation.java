@@ -2,14 +2,12 @@ package com.banking.operations;
 
 import java.util.Scanner;
 
-public class CheckBalanceOperation extends BankOperation {
-    @Override
-    public void getInput(Scanner scanner) {
-        // TODO: prompt for and store the input needed for this operation
-    }
+import com.banking.database.DBConnection;
+import com.banking.model.Account;
 
+public class CheckBalanceOperation extends BankOperationWithAccount {
     @Override
-    public void execute() {
-        // TODO: implement checking an account balance
+    protected void execute_inner(DBConnection conn, Account account) {
+        System.out.println("Balance: " + account.balance);
     }
 }
