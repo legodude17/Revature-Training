@@ -2,6 +2,7 @@ package com.banking;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import com.banking.operations.BankOperation;
 
 public class Main {
     public static void main(String[] args) {
@@ -32,6 +33,8 @@ public class Main {
                 scanner.nextLine(); // Consume the newline to avoid an error with a consecutive string input
             }
 
+            BankOperation operation;
+
             switch (choice) {
                 
                 case 9:
@@ -40,6 +43,10 @@ public class Main {
                     System.out.println("Invalid choice. Please enter a number between 1 and 9.");
                     continue mainLoop;
             }
+
+            operation.getInput(scanner);
+
+            operation.execute();
         }
 
         scanner.close();
