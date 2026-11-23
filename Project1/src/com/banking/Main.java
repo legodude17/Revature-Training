@@ -2,6 +2,7 @@ package com.banking;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 import com.banking.operations.BankOperation;
 
 public class Main {
@@ -36,7 +37,30 @@ public class Main {
             BankOperation operation;
 
             switch (choice) {
-                
+                case 1:
+                    operation = BankOperations.CREATE_CUSTOMER;
+                    break;
+                case 2:
+                    operation = BankOperations.CREATE_ACCOUNT;
+                    break;
+                case 3:
+                    operation = BankOperations.VIEW_CUSTOMER_DETAILS;
+                    break;
+                case 4:
+                    operation = BankOperations.DEPOSIT;
+                    break;
+                case 5:
+                    operation = BankOperations.WITHDRAW;
+                    break;
+                case 6:
+                    operation = BankOperations.CHECK_BALANCE;
+                    break;
+                case 7:
+                    operation = BankOperations.TRANSFER;
+                    break;
+                case 8:
+                    operation = BankOperations.VIEW_TRANSACTION_HISTORY;
+                    break;
                 case 9:
                     break mainLoop;
                 default:
