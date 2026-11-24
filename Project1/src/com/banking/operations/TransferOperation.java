@@ -1,6 +1,6 @@
 package com.banking.operations;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import com.banking.database.DBConnection;
@@ -56,9 +56,9 @@ public class TransferOperation extends BankOperation {
 
         String reference = fromAccountNum + "->" + toAccountNum + ":" + amount;
         Transaction transactionSend = new Transaction(
-                0, fromAccountNum, TransactionType.TRANSFER, -amount, reference, new Date());
+                0, fromAccountNum, TransactionType.TRANSFER, -amount, reference, LocalDate.now());
         Transaction transactionRecieve = new Transaction(
-                0, toAccountNum, TransactionType.TRANSFER, amount, reference, new Date());
+                0, toAccountNum, TransactionType.TRANSFER, amount, reference, LocalDate.now());
         conn.insertTransaction(transactionSend);
         conn.insertTransaction(transactionRecieve);
     }

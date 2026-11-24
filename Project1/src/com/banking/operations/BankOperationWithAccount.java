@@ -1,6 +1,6 @@
 package com.banking.operations;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import com.banking.database.DBConnection;
@@ -38,7 +38,7 @@ public abstract class BankOperationWithAccount extends BankOperation {
                 type,
                 amount,
                 null,
-                new Date());
+                LocalDate.now());
 
         conn.insertTransaction(newTransaction);
     }
