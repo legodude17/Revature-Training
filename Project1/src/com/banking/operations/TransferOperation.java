@@ -54,19 +54,11 @@ public class TransferOperation extends BankOperation {
         fromAccount.balance -= amount;
         toAccount.balance += amount;
 
-        Transaction transactionSend = new Transaction();
-        Transaction transactionRecieve = new Transaction();
         String reference = fromAccountNum + "->" + toAccountNum + ":" + amount;
-        transactionSend.account_number = fromAccountNum;
-        transactionRecieve.account_number = toAccountNum;
-        transactionSend.type = TransactionType.TRANSFER;
-        transactionRecieve.type = TransactionType.TRANSFER;
-        transactionSend.date = new Date();
-        transactionRecieve.date = new Date();
-        transactionSend.amount = -amount;
-        transactionRecieve.amount = amount;
-        transactionSend.reference = reference;
-        transactionRecieve.reference = reference;
+        Transaction transactionSend = new Transaction(
+                0, fromAccountNum, TransactionType.TRANSFER, -amount, reference, new Date());
+        Transaction transactionRecieve = new Transaction(
+                0, toAccountNum, TransactionType.TRANSFER, amount, reference, new Date());
         conn.insertTransaction(transactionSend);
         conn.insertTransaction(transactionRecieve);
     }

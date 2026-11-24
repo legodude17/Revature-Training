@@ -22,13 +22,13 @@ public class CreateCustomerOperation extends BankOperation {
 
     @Override
     public void execute(DBConnection conn) {
-        Customer newCustomer = new Customer();
-        newCustomer.id = (int) Math.round(Math.random() * 100000000);
-        newCustomer.name = name;
+        Customer newCustomer = new Customer(
+                (int) Math.round(Math.random() * 100000000),
+                name,
+                email,
+                phone);
         name = null;
-        newCustomer.email = email;
         email = null;
-        newCustomer.phone = phone;
         phone = null;
         
         conn.insertCustomer(newCustomer);

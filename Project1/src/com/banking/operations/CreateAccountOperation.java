@@ -25,15 +25,12 @@ public class CreateAccountOperation extends BankOperation {
     @Override
     public void execute(DBConnection conn) {
         Account newAccount;
+        long accountNumber = Math.round(Math.random() * 10000000);
         if (accountType) {
-            newAccount = new CurrentAccount();
+            newAccount = new CurrentAccount(accountNumber, customerId, 0, null);
         } else {
-            newAccount = new SavingsAccount();
+            newAccount = new SavingsAccount(accountNumber, customerId, 0, null);
         }
-
-        newAccount.customer_id = customerId;
-        newAccount.account_number = Math.round(Math.random() * 10000000);
-        newAccount.balance = 0;
 
         conn.insertAccount(newAccount);
 

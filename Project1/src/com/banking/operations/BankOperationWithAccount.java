@@ -32,12 +32,13 @@ public abstract class BankOperationWithAccount extends BankOperation {
     protected abstract void execute_inner(DBConnection conn, Account account);
 
     protected void addTransaction(DBConnection conn, double amount, TransactionType type) {
-        Transaction newTransaction = new Transaction();
-        newTransaction.id = (int) Math.round(Math.random() * 10000000);
-        newTransaction.account_number = accountNumber;
-        newTransaction.amount = amount;
-        newTransaction.date = new Date();
-        newTransaction.type = type;
+        Transaction newTransaction = new Transaction(
+                (int) Math.round(Math.random() * 10000000),
+                accountNumber,
+                type,
+                amount,
+                null,
+                new Date());
 
         conn.insertTransaction(newTransaction);
     }
