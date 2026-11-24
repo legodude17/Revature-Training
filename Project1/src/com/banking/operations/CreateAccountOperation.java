@@ -1,5 +1,6 @@
 package com.banking.operations;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import com.banking.database.DBConnection;
@@ -27,9 +28,9 @@ public class CreateAccountOperation extends BankOperation {
         Account newAccount;
         long accountNumber = Math.round(Math.random() * 10000000);
         if (accountType) {
-            newAccount = new CurrentAccount(accountNumber, customerId, 0, null);
+            newAccount = new CurrentAccount(accountNumber, customerId, 0, LocalDate.now());
         } else {
-            newAccount = new SavingsAccount(accountNumber, customerId, 0, null);
+            newAccount = new SavingsAccount(accountNumber, customerId, 0, LocalDate.now());
         }
 
         conn.insertAccount(newAccount);
