@@ -1,7 +1,5 @@
 package com.banking.operations;
 
-import java.util.Scanner;
-
 import com.banking.database.DBConnection;
 import com.banking.model.Account;
 
