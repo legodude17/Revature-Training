@@ -1,9 +1,12 @@
 package com.banking.operations;
 
 import java.time.LocalDate;
+import java.util.UUID;
 import java.util.Scanner;
 
 import com.banking.database.DBConnection;
+import com.banking.exception.InsufficientBalanceException;
+import com.banking.exception.InvalidAccountException;
 import com.banking.model.Account;
 import com.banking.model.Transaction;
 import com.banking.model.TransactionType;
@@ -29,37 +32,34 @@ public class TransferOperation extends BankOperation {
     }
 
     @Override
-    public void execute(DBConnection conn) {
+    public void execute(DBConnection conn) throws InvalidAccountException, InsufficientBalanceException {
         Account fromAccount = conn.queryAccount(fromAccountNum);
         if (fromAccount == null) {
-            System.out.println("Invalid sender account.");
-            return;
+            throw new InvalidAccountException("Invalid sender account.");
         }
 
         Account toAccount = conn.queryAccount(toAccountNum);
         if (toAccount == null) {
-            System.out.println("Invalid reciever account");
-            return;
+            throw new InvalidAccountException("Invalid reciever account");
         }
 
-        if (fromAccount == toAccount) {
-            System.out.println("Cannot transfer between the same account.");
-            return;
+        if (fromAccountNum == toAccountNum) {
+            throw new InvalidAccountException("Cannot transfer between the same account.");
         }
 
         if (fromAccount.balance < amount) {
-            System.out.println("Sender account has insufficient funds.");
+            throw new InsufficientBalanceException("Sender account has insufficient funds.");
         }
 
         fromAccount.balance -= amount;
         toAccount.balance += amount;
 
-        String reference = fromAccountNum + "->" + toAccountNum + ":" + amount;
-        Transaction transactionSend = new Transaction(
-                0, fromAccountNum, TransactionType.TRANSFER, -amount, reference, LocalDate.now());
-        Transaction transactionRecieve = new Transaction(
-                0, toAccountNum, TransactionType.TRANSFER, amount, reference, LocalDate.now());
-        conn.insertTransaction(transactionSend);
-        conn.insertTransaction(transactionRecieve);
+        String reference = UUID.randomUUID().toString();
+        LocalDate now = LocalDate.now();
+        conn.insertTransaction(new Transaction(
+                (int) Math.round(Math.random() * 10000000), fromAccountNum, TransactionType.TRANSFER, -amount, reference, now));
+        conn.insertTransaction(new Transaction(
+                (int) Math.round(Math.random() * 10000000), toAccountNum, TransactionType.TRANSFER, amount, reference, now));
+        System.out.printf("Transferred %.2f from %d to %d. Ref: %s%n", amount, fromAccountNum, toAccountNum, reference);
     }
 }

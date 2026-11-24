@@ -3,6 +3,7 @@ package com.banking.operations;
 import java.util.Scanner;
 
 import com.banking.database.DBConnection;
+import com.banking.exception.InsufficientBalanceException;
 import com.banking.model.Account;
 import com.banking.model.TransactionType;
 
@@ -18,14 +19,14 @@ public class WithdrawOperation extends BankOperationWithAccount {
     }
 
     @Override
-    protected void execute_inner(DBConnection conn, Account account) {
+    protected void execute_inner(DBConnection conn, Account account) throws InsufficientBalanceException {
         if (withdrawAmount <= 0) {
             System.out.println("Can only withdraw a positive amount.");
             return;
         }
 
         if (account.balance < withdrawAmount) {
-            System.out.println("Insufficient funds.");
+            throw new InsufficientBalanceException("Insufficient funds.");
         }
 
         account.balance -= withdrawAmount;

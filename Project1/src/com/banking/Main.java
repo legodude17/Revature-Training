@@ -4,6 +4,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.banking.database.DBConnection;
+import com.banking.exception.InsufficientBalanceException;
+import com.banking.exception.InvalidAccountException;
 import com.banking.operations.BankOperation;
 
 public class Main {
@@ -73,7 +75,11 @@ public class Main {
 
             operation.getInput(scanner);
 
-            operation.execute(conn);
+            try {
+                operation.execute(conn);
+            } catch (InvalidAccountException | InsufficientBalanceException e) {
+                System.out.println(e.getMessage());
+            }
         }
 
         scanner.close();
